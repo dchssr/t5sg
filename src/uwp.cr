@@ -33,7 +33,7 @@ class UWP
   def to_s(io : IO) #to_s via IO is preferred over #to_s directly to String
     io << "%c%X%X%X%X%X%c-%c" % [@port, @size, @atmosphere, @hydrographics,
                                  @population, @government, EHex.encode(@law_level),
-                                 @tech_level]
+                                 EHex.encode(@tech_level)]
   end
 
   private def roll_starport : Char
@@ -132,12 +132,12 @@ class UWP
   end
 
   private def tech_level_adjustment
-    tech_level_adjustment_port
-    + tech_level_adjustment_size
-    + tech_level_adjustment_atmosphere
-    + tech_level_adjustment_hydrographics
-    + tech_level_adjustment_population
-    + tech_level_adjustment_government
+    [tech_level_adjustment_port,
+     tech_level_adjustment_size,
+     tech_level_adjustment_atmosphere,
+     tech_level_adjustment_hydrographics,
+     tech_level_adjustment_population,
+     tech_level_adjustment_government].sum
   end
 
   private def roll_tech_level : UInt8
