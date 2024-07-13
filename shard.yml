@@ -1,0 +1,13 @@
+name: t5sg
+version: 0.0.1
+
+authors:
+  - Dave Chesser <dave@dchssr.site>
+
+targets:
+  t5sg:
+    main: src/t5sg.cr
+
+crystal: '>= 1.12.2'
+
+license: GPL-3.0-only
