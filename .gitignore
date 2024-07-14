@@ -1,5 +1,14 @@
+# Crystal
+
 /docs/
 /lib/
 /bin/
 /.shards/
 *.dwarf
+
+t5sg
+
+# Emacs
+# I know I KNOW. Need to tell it to *not* clutter in the first place.
+
+*~
