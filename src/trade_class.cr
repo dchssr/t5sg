@@ -14,6 +14,10 @@ class TradeClass
     @condition.call world
   end
 
+  def self.[](code : String) : TradeClass
+    @@classes[code]
+  end
+
   def self.for(world : World) : Array(String)
     @@classes.select {|code, trade_class|
       code if trade_class.applies_to? world
