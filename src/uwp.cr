@@ -22,6 +22,34 @@ class UWP
     @tech_level    = roll_tech_level
   end
 
+  # Create a UWP based on its profile string.
+  # Most likely the one we want.
+  def initialize(profile : String)
+    m = Regex.new(
+      "^(?<st>[ABCDEFGHXY])"    +
+      "(?<siz>[[:xdigit:]])"    +
+      "(?<atm>[[:xdigit:]])"    +
+      "(?<hyd>[0-9A])"          +
+      "(?<pop>[[:xdigit:]])"    +
+      "(?<gov>[[:xdigit:]])"    +
+      "(?<law>[[:xdigit:]GHJ])" +
+      "-"                       +
+      "(?<tl>[#{EHex::ALPHABET}])$",
+      Regex::CompileOptions::IGNORE_CASE)
+        .match profile
+
+    raise ArgumentError.new "#{profile} is not a valid UWP" if m.nil?
+
+    @port          = m["st"][0]
+    @size          = UInt8.new m["siz"], base: 16
+    @atmosphere    = UInt8.new m["atm"], base: 16
+    @hydrographics = UInt8.new m["hyd"], base: 16
+    @population    = UInt8.new m["pop"], base: 16
+    @government    = UInt8.new m["gov"], base: 16
+    @law_level     = UInt8.new m["law"], base: 16
+    @tech_level    = EHex.decode(m["tl"][0]).not_nil!.to_u8
+  end
+
   def initialize(@port,       @size,       @atmosphere, @hydrographics,
                  @population, @government, @law_level,  @tech_level)
   end
